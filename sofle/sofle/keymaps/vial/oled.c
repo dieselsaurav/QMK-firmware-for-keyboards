@@ -297,26 +297,116 @@ void render_layer_state(void) {
 }
 
 
-static void render_logo(void) {
-// logo图像，在https://joric.github.io/qle/生成，需要做成32*128大小的，然后把“static const unsigned char”改成“static const char”
-    static const char PROGMEM raw_logo[] ={
-        0,128, 64, 64,  0, 64, 64,128,  0,  0,  0,128, 64, 32, 16,  8,  4,  2,  2,  2,  2,  2,  2,  2,  4, 12, 24,224,  0,  0,  0,  0, 31, 32, 32,224,  0,192,224,249,250,253,253,254,252,240,224,192,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,159,  0,  0,  0,  0,  0,  0,254,  1,255,255,255,255,255,255,255,255,255,255,127,127, 63, 63, 63, 31, 31, 31, 14, 14,  6,  2,  0,  3,  2,  4, 56,  0,128, 64, 33, 22, 25,  7, 15, 15, 15,195,225,225,240,240,240,240,248,248,248,248,248,248,248,240,240,224,192,128,  0,240, 14,  0,
-        3,204, 48,192,224,240,248,254,255,255,255,255,255,255, 63, 31, 15, 15, 15,  7, 15, 31,255,255,255,255,255,255,254,225,252,  0,  0, 15,224, 63,255,255,255,255,255,255,255,255,255,252,240,246,246,240,240, 56, 28,127,255,127,255,255,255,255,255, 51,255,  0,  0,  0,253,  2,  1,  3, 15, 31, 63,127,127,127,255,255,225,197,133,129,131,134,252,255,255,254,255,255,255, 63,  3,  0, 31,192,  0,  0,  0,  1,  1,  2,  2,  2,  2,193,225, 96, 98,194,226, 98, 98,227,199, 13, 11, 19, 35, 67, 65, 65, 64, 64, 64, 32, 60,  3, 
-        0,  0,  0,  0,  0,  0,  0,  0,  0,207,207,140,140, 13, 13,140,140,207,207,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 56, 57, 59, 63, 63, 63, 63,187,185,184,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 62,127,255,227,  3,  3,  3,  3,113,120, 56, 56,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 12, 30, 30,126,254,254,142,128,128,128,128, 28, 60, 56, 56,  0,  3,  3,  0,  0,  0,  0,  0,  0, 
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,224,241,251,251, 59, 59, 59, 57, 56,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,193,227,231,103,103,119,247,247,247,  0,  0, 60, 42, 42, 42, 42,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,199,207,223,156, 24, 24, 31, 15,  7,  0,  0,142, 17, 17, 17,142,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 14, 63, 59,113,113,113,127,127,112,112,112,112,  0,  0,  3,  4,  4,100, 99,  0,  0,  0,  0,  0,
-    };
-    oled_write_raw_P(raw_logo, sizeof(raw_logo));
+// PARIX keycap logo - horizontal row rotated 90° CCW, X top P bottom (32 cols x 16 pages)
+static const char PROGMEM raw_logo[] = {
+      0,  0,  0,  0,128,192,224, 96, 96, 96, 96, 96, 96, 96, 96, 96,
+     96, 96, 96, 96, 96, 96, 96, 96,224,224,224,192,128,  0,  0,  0,
+      0,  0,  0,  0,255,255,  0,  0,  0,  0, 32, 64,128,128,  0,128,
+    128, 64, 64, 32,  0,  0,  0,  0,  0,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,255,255,128,  0,  0,  0,  8,  4,  6,  2,  1,  3,
+      2,  4,  4,  8,  0,  0,  0,  0,128,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,128,193,227, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+     99, 99, 99, 99, 99, 99, 99, 99,227,227,227,193,128,  0,  0,  0,
+      0,  0,  0,  0,255,255,  0,  0,  0,  0,224,128,128,128,128,128,
+    128,128,128,224,  0,  0,  0,  0,  0,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,255,255,128,  0,  0,  0,  3,  0,  0,  0,  0,  0,
+      0,  0,  0,  3,  0,  0,  0,  0,128,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,128,193,227, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+     99, 99, 99, 99, 99, 99, 99, 99,227,227,227,193,128,  0,  0,  0,
+      0,  0,  0,  0,255,255,  0,  0,  0,  0,192, 96, 32, 32, 96,128,
+     64, 32, 32, 16,  0,  0,  0,  0,  0,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,255,255,128,  0,  0,  0, 15,  8,  8,  8,  8, 15,
+      8,  8,  8,  8,  0,  0,  0,  0,128,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,128,193,227, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+     99, 99, 99, 99, 99, 99, 99, 99,227,227,227,193,128,  0,  0,  0,
+      0,  0,  0,  0,255,255,  0,  0,  0,  0,  0,128,128,128,128, 64,
+    192, 64, 32, 32,  0,  0,  0,  0,  0,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,255,255,128,  0,  0,  0,  1,  2,  2,  2,  2,  4,
+      7,  4,  8,  8,  0,  0,  0,  0,128,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,128,193,227, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+     99, 99, 99, 99, 99, 99, 99, 99,227,227,227,193,128,  0,  0,  0,
+      0,  0,  0,  0,255,255,  0,  0,  0,  0,224, 48, 16, 16, 48,224,
+      0,  0,  0,  0,  0,  0,  0,  0,  0,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,255,255,128,  0,  0,  0,  7,  4,  4,  4,  4,  7,
+      4,  4,  4,  4,  0,  0,  0,  0,128,255,255,255,255,  0,  0,  0,
+      0,  0,  0,  0,  0,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+      3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  0,  0,  0,  0,
+};
+
+/* Glitch effect state */
+static uint32_t glitch_timer     = 0;
+static uint32_t glitch_next      = 3000;  // ms until next glitch
+static uint8_t  glitch_frames    = 0;     // remaining glitch frames
+static uint16_t glitch_seed      = 42;    // PRNG state
+
+static uint16_t glitch_rand(void) {
+    glitch_seed ^= glitch_seed << 7;
+    glitch_seed ^= glitch_seed >> 9;
+    glitch_seed ^= glitch_seed << 8;
+    return glitch_seed;
 }
 
+static void render_logo(void) {
+    char buf[512];
+    memcpy_P(buf, raw_logo, 512);
 
+    if (glitch_frames > 0) {
+        glitch_frames--;
+        uint8_t fx = glitch_rand() % 4;
+
+        if (fx == 0) {
+            // Horizontal slice shift: pick a page, shift a horizontal strip
+            uint8_t page = glitch_rand() % 4;
+            uint8_t start = glitch_rand() % 96;
+            uint8_t len   = 16 + (glitch_rand() % 32);
+            int8_t  shift = (glitch_rand() % 13) - 6; // -6 to +6
+            if (shift > 0) {
+                for (int c = 127; c >= start + shift; c--) {
+                    if (c - shift >= start && c - shift < 128) {
+                        buf[page * 128 + c] = buf[page * 128 + c - shift];
+                    }
+                }
+            } else if (shift < 0) {
+                for (int c = start; c < start + len && c < 128; c++) {
+                    if (c - shift < 128) {
+                        buf[page * 128 + c] = buf[page * 128 + c - shift];
+                    }
+                }
+            }
+        } else if (fx == 1) {
+            // Noise block: fill a random rectangle with noise
+            uint8_t page = glitch_rand() % 4;
+            uint8_t col  = glitch_rand() % 100;
+            uint8_t w    = 8 + (glitch_rand() % 24);
+            for (uint8_t c = col; c < col + w && c < 128; c++) {
+                buf[page * 128 + c] = (uint8_t)glitch_rand();
+            }
+        } else if (fx == 2) {
+            // Invert a random horizontal strip
+            uint8_t page = glitch_rand() % 4;
+            uint8_t col  = glitch_rand() % 80;
+            uint8_t w    = 20 + (glitch_rand() % 40);
+            for (uint8_t c = col; c < col + w && c < 128; c++) {
+                buf[page * 128 + c] = ~buf[page * 128 + c];
+            }
+        } else {
+            // Screen tear: duplicate one page's data onto an adjacent page
+            uint8_t src = glitch_rand() % 4;
+            uint8_t dst = (src + 1 + (glitch_rand() % 3)) % 4;
+            uint8_t col = glitch_rand() % 64;
+            uint8_t w   = 32 + (glitch_rand() % 48);
+            for (uint8_t c = col; c < col + w && c < 128; c++) {
+                buf[dst * 128 + c] = buf[src * 128 + c];
+            }
+        }
+    }
+
+    oled_write_raw(buf, 512);
+}
 
 bool oled_task_user(void) {
-    // Renders the current keyboard state (layers and mods)
-        /* KEYBOARD PET VARIABLES START */
-
     if (is_keyboard_master()) {
         current_wpm   = get_current_wpm();
-        //led_usb_state = host_keyboard_led_state();
 
         oled_set_cursor(0, 1);
         render_luna(0, 1);
@@ -326,7 +416,13 @@ bool oled_task_user(void) {
         render_mod_status_gui_alt(get_mods()|get_oneshot_mods());
         render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
     } else {
-        render_logo();  // Renders a static logo
+        // Trigger glitch bursts at random intervals
+        if (timer_elapsed32(glitch_timer) > glitch_next) {
+            glitch_timer  = timer_read32();
+            glitch_frames = 2 + (glitch_rand() % 5);           // 2-6 glitch frames
+            glitch_next   = 2000 + (glitch_rand() % 6000);     // 2-8s until next glitch
+        }
+        render_logo();
     }
     return false;
 }
